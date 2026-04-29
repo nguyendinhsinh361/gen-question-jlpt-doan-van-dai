@@ -189,7 +189,7 @@ Agent đọc lại file HTML và kiểm tra:
 | 7 | **White background** | Xem CSS | `.passage` có `background: white`, body `#f9fafb` |
 | 8 | **Paragraph count** | Đếm `<p>` trong `.passage` | N1: 5-8 đoạn. N3: 4-6 đoạn |
 | 9 | **Furigana format** | Tìm ngoặc `漢字(かんじ)` hoặc `漢字【かんじ】` | Không có — tất cả furigana dùng `<ruby><rt>` |
-| 10 | **Ruby có `<rt>`** | Xem mọi `<ruby>...</ruby>` | Tất cả đều có `<rt>` bên trong (chạy `process_html.py --validate`) |
+| 10 | **Ruby có `<rt>` không rỗng** | Xem mọi `<ruby>...</ruby>` | Tất cả đều có `<rt>` chứa furigana **không rỗng** (vd `<ruby>褒<rt>ほ</rt></ruby>める`). CẤM `<ruby>褒</ruby>` (thiếu rt) hoặc `<ruby>褒<rt></rt></ruby>` (rt rỗng). Auto-check: `process_html.py --validate` |
 | 11 | **Ruby count + Visual đúng level** | Đếm `<ruby>` + xem marker/annotation/source | Ruby: N1 ≤ 6, N3 ≤ 15. Visual phù hợp: N1 source nên có (70%), N3 annotation nên có (64%), marker khớp với câu reference |
 
 #### PHẦN B: NỘI DUNG & TỪ VỰNG (6 checks)
@@ -245,6 +245,12 @@ Agent đọc TOÀN BỘ câu hỏi + 4 đáp án từ CSV và đánh giá từng
 ### BƯỚC 4: SỬA & LẶP LẠI
 
 > **⛔ Khi sửa HTML, CẬP NHẬT CSV — chạy lại `process_html.py --refresh` để cập nhật `text_read`, `jp_char_count` trong CSV.**
+>
+> **🚨 ĐẶC BIỆT khi sửa `<ruby>` thiếu/rỗng `<rt>`:** Đây là lỗi PHỔ BIẾN — agent hay chỉ sửa HTML mà QUÊN refresh CSV → CSV cột `text_read` vẫn chứa ruby hỏng → AI fine-tuning data BỊ HỎNG.
+> Workflow BẮT BUỘC khi sửa ruby:
+> 1. Sửa HTML: thay `<ruby>褒</ruby>` → `<ruby>褒<rt>ほ</rt></ruby>める`
+> 2. **BẮT BUỘC** chạy: `python3 .claude/skills/jlpt-reading-long-passage/scripts/process_html.py --refresh --html-dir assets/html/doan_van_dai --csv sheets/samples_v1.csv`
+> 3. Verify: `python3 .claude/skills/jlpt-reading-long-passage/scripts/process_html.py --validate --html-dir assets/html/doan_van_dai --csv sheets/samples_v1.csv` — output PHẢI có dòng `✅ CSV ...: 0 row với broken ruby`. Nếu vẫn báo `🚫 CSV ... có N row với broken ruby` → CSV chưa sync, chạy lại `--refresh`.
 >
 > Không có screenshot nên KHÔNG cần chạy lại screenshot script.
 
