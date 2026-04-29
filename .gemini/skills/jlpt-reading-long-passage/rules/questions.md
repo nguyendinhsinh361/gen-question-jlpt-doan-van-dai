@@ -87,6 +87,19 @@ Mỗi câu hỏi đứng độc lập — không tham chiếu câu hỏi khác (
 - **N1 (3 câu, 5-8 paragraph)**: Q1 test paragraph 2-3, Q2 test paragraph 3-4 (hoặc paragraph khác Q1), Q3 test toàn bài (author_opinion)
 - **N3 (4 câu, 4-6 paragraph)**: Q1 test paragraph 2, Q2 test paragraph 3-4, Q3 test paragraph 4-5 (reason), Q4 test toàn bài
 
+### Văn phong câu hỏi (thể động từ) theo level — BẮT BUỘC
+
+Câu hỏi (`question_X`) và 4 lựa chọn (`answer_X`) phải dùng đúng **thể động từ** theo level:
+
+| Level | Thể bắt buộc | Đặc trưng kết câu |
+|-------|--------------|-------------------|
+| **N1, N2, N3** | **Thể thường** (普通体 / だ・である調) | `〜か。` / `〜のはどれか。` / `〜と考えられるか。` (KHÔNG dùng です/ます) |
+| **N4, N5** | **Thể ます** (です・ます調) | `〜ですか。` / `〜のはどれですか。` / `〜と思いますか。` |
+
+**Quy tắc cứng:**
+- Đoạn văn dài CHỈ có **N1 và N3** → cả 2 level đều dùng **thể thường**, KHÔNG được dùng です/ます
+- Câu hỏi và **cả 4 đáp án** phải nhất quán cùng thể (không trộn lẫn)
+
 ---
 
 ## R6. Đáp án (`answer_X`, `correct_answer_X`, `explain_vn_X`, `explain_en_X`)
@@ -150,24 +163,36 @@ Với mỗi distractor, tự hỏi:
 5. **Only-one-correct test**: Có thể có 2 đáp án cùng đúng không?
    - CÓ → sửa cho rõ chỉ 1 đáp án đúng
 
-### R6.5 Format explanation (3 phần VN + EN)
+### R6.5 Format explanation — 3 phần BẮT BUỘC (VN + EN)
 
-Mỗi câu có `explain_vn_X` và `explain_en_X` viết theo cùng cấu trúc 3 phần:
+> **Explanation không chỉ "có nội dung" — nó phải CHỨNG MINH câu hỏi + đáp án đúng có logic.**
+> Đoạn văn dài 5-8 paragraph nên explanation PHẢI **chỉ rõ paragraph số mấy**, trích cụ thể từ bài để chứng minh.
 
-**Phần 1 — Đáp án đúng**: Nêu đáp án đúng là số mấy + trích câu/đoạn trong bài xác nhận + giải thích paraphrase nếu có.
+**Phần 1 — Đáp án đúng (BẮT BUỘC trích bài + paragraph):**
+- Nêu rõ "Đáp án đúng: (X)" + nội dung paraphrase
+- **Trích dẫn câu/đoạn cụ thể** trong bài xác nhận đáp án (vd: "Paragraph 4 viết: `「...」`", "Câu cuối paragraph 6: `「...」`")
+- **Bắt buộc chỉ rõ paragraph số mấy** vì bài dài — không đủ để nói "trong bài"
+- Nếu là author_opinion (câu cuối): trích **thesis statement** ở paragraph mở đầu / kết / chuyển ý
+- Nêu paraphrase: đáp án dùng từ đồng nghĩa nào với bài
 
-**Phần 2 — Đáp án sai**: Giải thích TẠI SAO từng đáp án sai. Nêu rõ loại bẫy (reversal / detail swap / scope / misinterpretation / part of truth / over-generalization) và chỉ ra info/ý trong bài khiến đáp án đó sai.
+**Phần 2 — Đáp án sai (TỪNG đáp án + loại bẫy):**
+- Đi qua **TẤT CẢ 3 đáp án sai** (1 đáp án 1 dòng), không bỏ sót
+- Mỗi đáp án sai phải nêu:
+  1. **Loại bẫy** (Reversal / Detail swap / Scope / Misinterpretation / Part of truth / Over-generalization / Mixing)
+  2. **Trích cụ thể** từ bài chứng minh sai + **chỉ rõ paragraph** (vd: "Paragraph 2 nói X nhưng đáp án 2 nói Y → trái ý")
+- KHÔNG dùng câu chung chung — phải chỉ rõ paragraph nào, ý nào trong bài đủ để bác bỏ
 
-**Phần 3 — Tóm tắt**: 1 câu tóm tắt ý chính của câu hỏi này (helpful để AI học).
+**Phần 3 — Tóm tắt chiến lược:**
+- 1 câu ngắn: thí sinh cần làm gì để giải đúng (vd: "Câu cuối → tìm thesis ở paragraph kết, loại trừ chi tiết phụ ở paragraph giữa").
 
-### R6.6 Ví dụ đáp án + explanation
+### R6.6 Ví dụ đáp án + explanation (BÀI N1 mẫu — 6 paragraph)
 
-**Bài N1** (giả tưởng): Tác giả viết về ngôn ngữ và tư duy, kết luận rằng việc giữ gìn ngôn ngữ phong phú = giữ gìn tư duy sâu sắc.
+**Bài N1** (giả tưởng — 6 paragraph): Tác giả viết về ngôn ngữ và tư duy. Paragraph 1-2 nêu vấn đề (đơn giản hoá ngôn ngữ ngày nay), paragraph 3-4 phân tích cơ chế "ngôn ngữ định hình tư duy", paragraph 5 đề cập đa ngôn ngữ, paragraph 6 kết luận thesis.
 
-**Question 3** (`question_author_opinion`):
+**Question 3** (`question_author_opinion` — câu cuối):
 > この文章で筆者が最も伝えたいことはどれか。
 
-**Answers**:
+**Answers** (4 options, no prefix):
 ```
 言語は思考そのものを形作るため、豊かな語彙を保持することが重要である
 複数の言語を話せる人は、複数の思考様式を持つことができる
@@ -179,23 +204,31 @@ Mỗi câu có `explain_vn_X` và `explain_en_X` viết theo cùng cấu trúc 3
 
 **explain_vn**:
 ```
-Đáp án đúng: 1. Bài kết luận: "言葉を守ることは、思考を守ることであり、ひいては自分自身を守ることに他ならない" — xác nhận ý chính là bảo vệ ngôn ngữ phong phú = bảo vệ tư duy. Đáp án 1 paraphrase đúng luận điểm tổng quát.
-Đáp án sai:
-- 2 (Part of truth): Bài có đề cập câu hỏi về đa ngôn ngữ nhưng không phải ý chính — tác giả nói đa ngôn ngữ không quyết định tư duy.
-- 3 (Reversal): Đảo ngược — bài nói đơn giản hoá ngôn ngữ là vấn đề, không phải tốt.
-- 4 (Scope): Bịa phạm vi — bài không nói về "giới hạn tư duy", mà về quan hệ ngôn ngữ-tư duy.
-Tóm tắt: Câu hỏi test khả năng xác định luận điểm tổng quát của tác giả (author_opinion), không phải chi tiết phụ.
+ĐÁP ÁN ĐÚNG (1): 言語は思考そのものを形作るため、豊かな語彙を保持することが重要である (Ngôn ngữ định hình chính tư duy nên giữ gìn vốn từ phong phú là quan trọng).
+Paragraph 6 (kết) viết: 「言葉を守ることは、思考を守ることであり、ひいては自分自身を守ることに他ならない」 (Bảo vệ ngôn ngữ là bảo vệ tư duy, và cuối cùng là bảo vệ chính mình). Paragraph 3-4 đã xây dựng cơ chế "ngôn ngữ định hình tư duy". Đáp án 1 paraphrase đúng thesis tổng thể.
+
+ĐÁP ÁN SAI:
+(2) 複数の言語を話せる人は... — Part of truth: Paragraph 5 có đề cập đa ngôn ngữ, nhưng tác giả viết 「多言語話者であっても思考様式が複数になるとは限らない」 — phủ định luận điểm này. KHÔNG phải ý chính.
+(3) 現代社会では単純化された言葉が便利で望ましい — Reversal: Paragraph 1-2 phê phán "đơn giản hoá ngôn ngữ" là vấn đề. Đáp án 3 đảo ngược thesis — sai hoàn toàn.
+(4) 言語学者の研究によって思考の限界が明らかになった — Scope: Bài KHÔNG đề cập "giới hạn tư duy" hay "nghiên cứu của nhà ngôn ngữ học". Đây là phạm vi bịa, không có trong bất kỳ paragraph nào.
+
+Tóm tắt: Câu cuối (author_opinion) → trích thesis ở paragraph kết (P6), so với phương án; loại trừ đáp án "đảo ngược thesis" (3), "ý phụ trong P5" (2), "bịa phạm vi" (4).
 ```
 
 **explain_en**:
 ```
-Correct answer: 1. Article concludes: "Protecting language is protecting thought, and ultimately protecting oneself" — confirms the main idea is preserving rich language = preserving deep thought. Option 1 correctly paraphrases the overall thesis.
-Wrong answers:
-- 2 (Part of truth): Article mentions multilingualism but notes it doesn't determine thought — not the main idea.
-- 3 (Reversal): Reversal — article claims language simplification is a problem, not desirable.
-- 4 (Scope): Fabricated scope — article doesn't discuss "limits of thought", but the language-thought relationship.
-Summary: Question tests identifying the author's overall thesis (author_opinion), not secondary details.
+CORRECT ANSWER (1): 言語は思考そのものを形作るため、豊かな語彙を保持することが重要である (Language shapes thought itself, so preserving rich vocabulary is important).
+Paragraph 6 (conclusion) states: 「言葉を守ることは、思考を守ることであり、ひいては自分自身を守ることに他ならない」 (Protecting language is protecting thought, and ultimately protecting oneself). Paragraphs 3-4 build up the mechanism of "language shapes thought." Option 1 correctly paraphrases the overall thesis.
+
+WRONG ANSWERS:
+(2) 複数の言語を話せる人は... — Part of truth: Paragraph 5 mentions multilingualism, but the author writes 「多言語話者であっても思考様式が複数になるとは限らない」 — refuting this very claim. NOT the main idea.
+(3) 現代社会では単純化された言葉が便利で望ましい — Reversal: Paragraphs 1-2 criticize "language simplification" as the problem. Option 3 reverses the thesis — completely wrong.
+(4) 言語学者の研究によって思考の限界が明らかになった — Scope: Article does NOT mention "limits of thought" or "linguistic research." This scope is fabricated; no paragraph contains it.
+
+Summary: For final author_opinion questions → quote the thesis in the closing paragraph (P6) and compare to options; eliminate "thesis reversal" (3), "secondary point in P5" (2), "fabricated scope" (4).
 ```
+
+**Explanation phải bằng cả 2 ngôn ngữ (VN + EN)** với cùng nội dung logic — không phải dịch máy.
 
 ### R6.7 Đa câu trong 1 bài — Tránh trùng
 

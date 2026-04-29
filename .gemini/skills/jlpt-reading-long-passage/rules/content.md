@@ -13,21 +13,21 @@
 
 ### Topic tag — BẮT BUỘC
 
-Tag chọn từ `rules/topic.json` — đoạn văn dài dùng **tiếng Việt** (khớp data mẫu & `smoke_test.csv`).
+Tag PHẢI bằng **tiếng Anh** — chọn từ cột `en` của `rules/topic.json` (catalog 287 topics, 13 category). Tham khảo `rules/rule_doc_hieu.md` (rule chung của giáo viên cho TOÀN BỘ phần đọc hiểu) để chọn topic phù hợp level. Category gợi ý theo level:
 
-| Category | Ví dụ tag (vi) | Phù hợp level |
+| Category | Ví dụ tag (en) | Phù hợp level |
 |----------|----------------|---------------|
-| Tiểu luận / phê bình cao cấp | `triết học`, `phê bình văn học`, `phê bình văn hóa`, `tiểu luận` | **N1** |
-| Xã hội / văn hóa | `xã hội`, `văn hóa`, `truyền thống`, `ngôn ngữ`, `môi trường` | N1, N3 |
-| Khoa học / công nghệ | `khoa học`, `công nghệ`, `sinh học`, `y học`, `thí nghiệm` | N1, N3 |
-| Công việc / kinh tế | `công việc`, `kinh tế`, `thương mại`, `sự nghiệp` | **N1** |
-| Đời sống / cá nhân | `đời sống`, `thư từ`, `nhật ký dài`, `kỷ niệm`, `trải nghiệm cá nhân` | **N3** |
-| Giáo dục | `giáo dục`, `học tập`, `nghiên cứu`, `trường học` | N1, N3 |
-| Tâm lý / cảm xúc | `tâm lý học`, `cảm xúc`, `tư duy`, `phát triển bản thân` | N1, N3 |
-| Nghệ thuật / thể thao / du lịch | `nghệ thuật`, `âm nhạc`, `văn học`, `thể thao`, `du lịch` | N1 |
+| Culture, Arts & Entertainment (philosophy/literary critique) | `philosophy`, `literature`, `literary criticism`, `cultural criticism` | **N1** |
+| Society & Relationships | `society`, `culture`, `tradition`, `language`, `environment` | N1, N3 |
+| Science & Technology | `science`, `technology`, `biology`, `medicine`, `experiment` | N1, N3 |
+| Work, Career & Business/Economics | `work`, `economics`, `business`, `career` | **N1** |
+| Personal Life / Daily Life | `daily life`, `correspondence`, `personal reflection`, `memory`, `personal experience` | **N3** |
+| Education & Language | `education`, `learning`, `research`, `school` | N1, N3 |
+| Personal Life & Psychology | `psychology`, `emotion`, `mindset`, `personal growth` | N1, N3 |
+| Arts / Sports / Travel | `art`, `music`, `literature`, `sports`, `travel` | N1 |
 
-> **⚠️ KHÔNG dùng tag tiếng Anh hoặc tiếng Nhật.**
-> Phải dùng tiếng Việt đúng cột `vi` của `rules/topic.json` (ví dụ: ✅ `văn hóa`, `triết học`, `đời sống`).
+> **⚠️ KHÔNG dùng tag tiếng Việt hoặc tiếng Nhật. TUYỆT ĐỐI tiếng Anh.**
+> Phải dùng tiếng Anh slug đúng cột `en` của `rules/topic.json` (✅ `culture`, `philosophy`, `daily life`).
 
 Trong batch ≥ 3 bài, chọn topic từ ≥ 2 category khác nhau để đa dạng.
 

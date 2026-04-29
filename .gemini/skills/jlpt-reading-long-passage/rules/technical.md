@@ -213,7 +213,7 @@ Rules:
 |--------|------------------------|
 | `_id` | `{LEVEL}_{uuid.uuid4().hex}` — 32-char hex |
 | `level` | **`N1` hoặc `N3` only** (N2/N4/N5 không apply) |
-| `tag` | Topic tiếng Việt từ `rules/topic.json` (VD: `triết học`, `phê bình văn hóa`, `đời sống`) |
+| `tag` | Topic **tiếng Anh** slug từ cột `en` của `rules/topic.json` (VD: `philosophy`, `cultural criticism`, `daily life`) |
 | `jp_char_count` | Result of `count_body_chars()` |
 | `kind` | **Always `đoạn văn dài`** |
 | `general_audio` | `""` (empty) |
