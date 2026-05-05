@@ -81,9 +81,17 @@ description: >
 
 ## BƯỚC 0: CHUẨN BỊ (1 lần cho batch)
 
-1. **Đọc `rules/rule_doc_hieu.md`** — **rule chung của giáo viên tiếng Nhật cho TOÀN BỘ phần đọc hiểu** (source-of-truth cho từ vựng/ngữ pháp theo level, kỹ thuật ra câu hỏi, distractor traps). Section 3-5 áp dụng trực tiếp. Section 1-2 (chủ đề + form) chủ yếu cho "tìm thông tin" — tham khảo tinh thần, áp dụng linh hoạt cho prose reading.
+1. **Đọc `rules/rule_doc_hieu.md`** — **Bộ Tiêu Chí Đánh Giá Đọc Hiểu JLPT toàn diện** từ giáo viên (source-of-truth, 11 phần: 4 tiêu chí, 程度 ±, 書き下ろし/による, ①② 下線 注, furigana per level, 8 loại câu hỏi, 6 loại bẫy, tiêu chí chi tiết per level).
+   **Phần áp dụng trực tiếp cho dạng đoạn văn dài (長文)** — CHỈ N1 và N3:
+   - Phần 1 (Tổng quan & Nguyên tắc 程度) — biên ± per level; 書き下ろし bắt buộc N3, có thể trích nguồn N1
+   - Phần 2 (Hình thức) — ①②③ thường có; 注 bắt buộc khi có thuật ngữ
+   - Phần 3 (Furigana) — bảng quy tắc per level
+   - Phần 4 (8 loại câu hỏi) — đặc biệt reference (×1-2), reason_explanation, author_opinion (N1), content_match/meaning_interpretation
+   - Phần 5 (6 loại bẫy đáp án)
+   - **Phần 8.3 (N3 長文 ~550字, 4 câu)**, **Phần 10.3 (N1 長文 ~1000字, 3 câu)** — tiêu chí chi tiết 4 chiều
+   - Phần 11 (Bảng so sánh tổng hợp) — tra cứu nhanh.
 2. **Đọc rules skill**: `rules/content.md` + `rules/vocabulary.md` + `rules/technical.md` + `rules/questions.md`
-3. **Đọc `rules/kanji_simplified.csv`** — dùng để tra level từng kanji khi quyết định furigana
+3. **Đọc `rules/kanji_jlpt_sensei.csv`** — dùng để tra level từng kanji khi quyết định furigana
 4. **Scan `sheets/samples_v1.csv` và `data/doan_van_dai_n{1,3}_clean.json`** — xem format, topic đã dùng → chọn format chưa/ít dùng
 5. **Load 2-3 sample calibrate style**:
    ```bash
@@ -116,7 +124,7 @@ description: >
    - `<p>` thuần, KHÔNG `<br>` giữa câu (đoạn văn dài KHÔNG có exception)
    - **Paragraph count**: N1 = 5-8, N3 = 4-6
    - Marker ①②③ khớp với các câu hỏi `question_reference`
-   - Furigana chỉ cho từ vượt level (tra `rules/kanji_simplified.csv`) — data 0% nên giữ ít
+   - Furigana chỉ cho từ vượt level (tra `rules/kanji_jlpt_sensei.csv`) — data 0% nên giữ ít
    - **Source line**: N1 rất nên có (data 70%), N3 optional (data 38%)
    - **Annotation 注**: N3 rất nên có (data 64%, 2-3 cái), N1 optional (25%, 1-2 cái)
 6. **Gen 3-4 câu hỏi + 4 đáp án mỗi câu** theo `rules/questions.md`:
@@ -201,7 +209,7 @@ Agent đọc lại file HTML và kiểm tra:
 | 14 | **Nội dung logic + đủ depth cho 3-4 câu hỏi** | Đọc toàn bài | Ý nhất quán, đủ nội dung phủ 3-4 câu hỏi khác nhau, có intro + body + (counter) + conclusion |
 | 15 | **Không mơ hồ (test 2 cách hiểu)** | Đọc từng câu, thử hiểu theo cách 2 | Chỉ có DUY NHẤT 1 cách hiểu hợp lý cho từng câu hỏi |
 | 16 | **Từ vựng đúng level** | Đọc từng từ, đối chiếu R3 | Key terms ≤ level, không dùng ngữ pháp vượt level |
-| 17 | **Furigana đúng từ (tra CSV)** | Tra từng kanji trong `rules/kanji_simplified.csv` | Mọi từ có kanji vượt level đều có `<ruby><rt>`. Không thừa furigana cho từ đúng level. Không dạng "Ab" (構ちく) |
+| 17 | **Furigana đúng từ (tra CSV)** | Tra từng kanji trong `rules/kanji_jlpt_sensei.csv` | Mọi từ có kanji vượt level đều có `<ruby><rt>`. Không thừa furigana cho từ đúng level. Không dạng "Ab" (構ちく) |
 
 #### PHẦN C: CÂU HỎI & ĐÁP ÁN (11 checks — áp dụng cho TỪNG câu hỏi)
 
@@ -263,7 +271,7 @@ Agent đọc TOÀN BỘ câu hỏi + 4 đáp án từ CSV và đánh giá từng
 | #8 (paragraph count) | Chia/gộp paragraph đạt N1:5-8, N3:4-6 | Chạy `--refresh` → QC lại |
 | #9, #10, #11 (ruby/visual) | Sửa ruby tags hoặc thêm marker/source/annotation theo level | Chạy `--refresh` → QC lại |
 | #12-#16 | Gen lại nội dung (giữ _id) | Chạy `--refresh` → QC lại |
-| #17 (furigana tra CSV) | Sửa ruby tags (tra lại `rules/kanji_simplified.csv`) | Chạy `--refresh` → QC lại |
+| #17 (furigana tra CSV) | Sửa ruby tags (tra lại `rules/kanji_jlpt_sensei.csv`) | Chạy `--refresh` → QC lại |
 | #18 (số câu hỏi) | Thêm/xóa câu bằng `fill_qa.py` để đúng số slot (N1=3, N3=4) | QC lại |
 | #19, #20 (labels) | Sửa label trong `fill_qa.py` (dùng đủ `question_` prefix + đa dạng) | QC lại |
 | #21 (câu cuối label) | Sửa câu cuối = `question_author_opinion` (N1) / `question_content_match`/`question_author_opinion` (N3) | QC lại |
@@ -424,4 +432,4 @@ Chi tiết phân tích từng level xem `references/sample-analysis.md`.
 
 ## Cảnh báo bảo mật dữ liệu
 
-> **🚫 KHÔNG ĐƯỢC GHI VÀO THƯ MỤC `rules/`** — `rules/question_sheet.csv`, `rules/topic.json`, `rules/kanji_simplified.csv`, `rules/question_format.json`, `rules/mission.json`, `rules/rule_doc_hieu.md` là file tham chiếu, chỉ đọc. Mọi dữ liệu gen phải ghi vào `sheets/samples_v1.csv`.
+> **🚫 KHÔNG ĐƯỢC GHI VÀO THƯ MỤC `rules/`** — `rules/question_sheet.csv`, `rules/topic.json`, `rules/kanji_jlpt_sensei.csv`, `rules/question_format.json`, `rules/mission.json`, `rules/rule_doc_hieu.md` là file tham chiếu, chỉ đọc. Mọi dữ liệu gen phải ghi vào `sheets/samples_v1.csv`.

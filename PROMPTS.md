@@ -33,7 +33,7 @@ Làm đúng theo SKILL.md — từng bài một, đọc rules/ trước khi gen.
 3. Trong cùng level: KHÔNG trùng topic; mỗi bài dùng ≥ 2 question_label khác nhau.
 4. Tag **tiếng Anh** từ cột `en` của `rules/topic.json` (vd: philosophy, science, economics). TUYỆT ĐỐI không tiếng Việt/Nhật.
 
-⛔ FURIGANA — chỉ cho từ VƯỢT level. Cấm dạng "Ab". Tra rules/kanji_simplified.csv.
+⛔ FURIGANA — chỉ cho từ VƯỢT level. Cấm dạng "Ab". Tra rules/kanji_jlpt_sensei.csv.
 
 ⛔ SOURCE LINE: N1 có thể có (tự chế tên tác giả/báo, KHÔNG dùng tên thật như 朝日/読売/村上春樹). N3 thường KHÔNG có.
 
@@ -57,7 +57,7 @@ Lưu CSV vào sheets/samples_v1.csv. HTML lưu vào assets/html/doan_van_dai/{LE
 Trước khi gen:
 1. Đọc rules/rule_doc_hieu.md (rule giáo viên — source-of-truth cho vocab/grammar/distractor)
 2. Đọc rules/content.md + rules/vocabulary.md + rules/technical.md + rules/questions.md
-3. Đọc rules/kanji_simplified.csv để tra level kanji
+3. Đọc rules/kanji_jlpt_sensei.csv để tra level kanji
 4. Đọc 1-2 sample: scripts/load_references.py --level {N1|N3} --count 2
 5. Scan sheets/samples_v1.csv xem topic + label combo nào đã dùng
 
