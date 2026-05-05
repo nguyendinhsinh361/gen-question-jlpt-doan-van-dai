@@ -81,13 +81,14 @@ description: >
 
 ## BƯỚC 0: CHUẨN BỊ (1 lần cho batch)
 
-1. **Đọc `rules/rule_doc_hieu.md`** — **Bộ Tiêu Chí Đánh Giá Đọc Hiểu JLPT toàn diện** từ giáo viên (source-of-truth, 11 phần: 4 tiêu chí, 程度 ±, 書き下ろし/による, ①② 下線 注, furigana per level, 8 loại câu hỏi, 6 loại bẫy, tiêu chí chi tiết per level).
+1. **Đọc `rules/rule_doc_hieu.md`** — **Bộ Tiêu Chí Đánh Giá Đọc Hiểu JLPT toàn diện** từ giáo viên (source-of-truth, 11 phần: 4 tiêu chí, 程度 ±, 書き下ろし/による, ①② 下線 注, **文体の統一 (thể chia)**, furigana per level, 8 loại câu hỏi, 5 loại bẫy chuẩn (+ Single-side cho 統合理解), tiêu chí chi tiết per level).
    **Phần áp dụng trực tiếp cho dạng đoạn văn dài (長文)** — CHỈ N1 và N3:
    - Phần 1 (Tổng quan & Nguyên tắc 程度) — biên ± per level; 書き下ろし bắt buộc N3, có thể trích nguồn N1
    - Phần 2 (Hình thức) — ①②③ thường có; 注 bắt buộc khi có thuật ngữ
+   - **Phần 2.4 (Thể chia nhất quán 文体の統一)** — N1/N3 dùng **普通形** (だ・である); văn bản + câu hỏi + 4 đáp án phải **thống nhất thể chia** (long-passage chỉ N1/N3 → toàn bộ 普通形).
    - Phần 3 (Furigana) — bảng quy tắc per level
    - Phần 4 (8 loại câu hỏi) — đặc biệt reference (×1-2), reason_explanation, author_opinion (N1), content_match/meaning_interpretation
-   - Phần 5 (6 loại bẫy đáp án)
+   - Phần 5 (5 loại bẫy chuẩn)
    - **Phần 8.3 (N3 長文 ~550字, 4 câu)**, **Phần 10.3 (N1 長文 ~1000字, 3 câu)** — tiêu chí chi tiết 4 chiều
    - Phần 11 (Bảng so sánh tổng hợp) — tra cứu nhanh.
 2. **Đọc rules skill**: `rules/content.md` + `rules/vocabulary.md` + `rules/technical.md` + `rules/questions.md`
