@@ -134,18 +134,31 @@ Dùng `fill_qa.py` để auto-quote.
 - **Đoạn văn dài = distractor tinh vi nhất trong series** — distractor sai ở 1 nuance (thời gian, nhân-quả đảo, phạm vi, subject).
 - **Đa dạng vị trí đúng**: trong batch ≥ 10 bài, `correct_answer` phân bố đều 1/2/3/4 (không lệch quá 40% về 1 con số).
 
-### R6.3 Các loại bẫy (distractor traps) — BẮT BUỘC đa dạng
+### ⛔ Phân loại bẫy đáp án — 7 loại tổng (5 chuẩn + bẫy có điều kiện)
 
-Trong 4 đáp án (1 đúng + 3 sai), 3 sai PHẢI dùng ≥ 3 loại bẫy khác nhau:
+> **Nguồn**: rule_doc_hieu.md Phần 5 (5.1–5.7). Áp dụng cho dạng này: **N1 (với 注 dài) + N3**.
+>
+> **Quy tắc:** Trong 4 đáp án (1 đúng + 3 sai), 3 distractor PHẢI dùng **≥ 3 loại bẫy khác nhau** từ bảng dưới. Mỗi distractor phải dùng info/ý THẬT từ bài (trừ Fabrication có thể bịa cận-context).
 
 | Loại bẫy | Mô tả | Ví dụ |
 |----------|-------|-------|
-| **① Reversal** | Đảo ngược logic/điều kiện/quan hệ nhân-quả từ bài | Bài nói "A dẫn đến B" → distractor nói "B dẫn đến A" |
-| **② Detail swap** | Đổi chi tiết (subject/object/số lượng/thời gian) | Bài: "研究チームは植物で実験した" → distractor: "研究チームは動物で実験した" |
-| **③ Scope** | Mở rộng/thu hẹp phạm vi | Bài: "ある場合" → distractor: "どんな場合も" |
-| **④ Misinterpretation** | Hiểu sai nghĩa từ/cụm từ chỉ định | `この考え方` ám chỉ X, distractor diễn giải là Y |
-| **⑤ Part of truth** | Chỉ đúng 1 phần của bài, bỏ sót ý quan trọng | Bài có 2 luận điểm A+B → distractor chỉ nói A (thiếu B) |
-| **⑥ Over-generalization** | Áp dụng cho mọi người/mọi trường hợp trong khi bài chỉ nói 1 đối tượng | Bài: "筆者は" → distractor: "日本人は全員" |
+| **① Reversal** ❌ | Đảo ngược ý nghĩa, kết luận, quan hệ nhân-quả từ bài | Bài: 「Aによって元気になった」 → Bẫy: 「Aの後で体が重くなった」 (đảo ngược) |
+| **② Detail Swap** 🔄 | Dùng thông tin đúng nhưng gán sai ngữ cảnh (sai đối tượng/thời điểm/địa điểm) | Bài: 「Aは嵐山, Bは金閣寺」 → Bẫy: 「Aは金閣寺」 (đúng chi tiết, sai ngữ cảnh) |
+| **③ Fabrication** 🎭 | Thêm thông tin hoàn toàn KHÔNG CÓ trong bài | Bài không nói X → Bẫy: 「XだからY」 — không kiểm chứng được |
+| **④ Scope** 📐 | Đáp án quá RỘNG (over-generalization) hoặc quá HẸP so với ý bài | Bài: 「金閣寺で写真」 → Bẫy rộng: 「京都で写真」 / Bẫy hẹp: 「池のそばで写真」 |
+| **⑤ Mixing** 🧩 | Kết hợp 2 thông tin đúng riêng lẻ thành ý sai (không tồn tại trong bài) | A đúng + B đúng nhưng không liên quan → Bẫy: 「AだからB」 |
+| **⑦ Peripheral Source** 📎 | Đáp án lấy nội dung từ **chú thích 注** thay vì văn bản chính — thông tin có thật nhưng sai nguồn | Bài có 注 giải thích thuật ngữ; Bẫy dùng định nghĩa đó làm câu trả lời. Phân biệt với Fabrication: thông tin có trong bài (từ 注), nhưng đó là bối cảnh, không phải nội dung trả lời. |
+
+**📊 Phân bổ thực tế per level (từ data đề thi):**
+- **N5–N4**: Reversal (cảm xúc/hành động) + Detail Swap đơn giản + Fabrication thông tin ngoài bài
+- **N3**: Detail Swap (hoán đổi nhân vật/thời điểm) + Mixing (trộn lý do) + Fabrication tinh tế hơn
+- **N2**: Scope (quá rộng/hẹp) + Reversal logic (concede trap: ý nhượng bộ vs ý chính) + Mixing (evidence + opinion)
+- **N1**: Peripheral Source (nếu 注 dài) + Reversal sâu (premise vs conclusion) + Scope cực tinh tế (1 từ điều kiện) + Mixing phức tạp (2+ bước lập luận)
+
+> **Áp dụng:** 5 loại chuẩn áp dụng cho cả N1 và N3. Peripheral Source CHỈ áp dụng cho N1 khi bài có 注 dài.
+
+> **🔍 Peripheral Source — đặc thù N1**: Khi N1 长文 có 注 dài và chi tiết, distractor có thể lấy nội dung từ 注 làm câu trả lời. Đặc biệt nguy hiểm vì thí sinh đọc 注 xong nhầm đó là câu trả lời. Distractor cho N1 BẮT BUỘC kiểm tra: thông tin có nằm trong văn bản chính không, hay chỉ trong 注?
+
 
 ### R6.4 Self-test cho distractor (trước khi finalize)
 
