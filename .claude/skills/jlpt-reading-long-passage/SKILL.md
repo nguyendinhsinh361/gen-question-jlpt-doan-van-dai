@@ -46,6 +46,7 @@ description: >
 | `scripts/process_html.py` | Xử lý HTML → CSV + count + validate + multi-question support | Gen CSV + QC |
 | `scripts/fill_qa.py` | Điền Q&A vào CSV (quote an toàn, 3-4 câu) | Sau khi gen Q&A |
 | `scripts/load_references.py` | Load sample JSON để calibrate | BƯỚC 0 chuẩn bị |
+| `scripts/check_furigana.py` | Auto-check furigana coverage vs `kanji_jlpt_sensei.csv` | BƯỚC 1 sau gen HTML + QC |
 
 ## Outputs Per Passage
 
@@ -153,7 +154,18 @@ Trước khi bắt đầu BƯỚC 1, agent PHẢI confirm bằng cách tick từ
    - Mỗi distractor PHẢI dùng info/ý THẬT từ bài (1 trong 6 loại bẫy: Reversal/Detail swap/Scope/Misinterpretation/Part of truth/Over-generalization)
    - Paraphrase: đáp án đúng KHÔNG copy > 4 từ (N1) hoặc > 5 từ (N3) liên tiếp
    - Giải thích `explain_vn_i` + `explain_en_i` theo format 3 phần
-7. **Tạo CSV row** bằng `process_html.py` hoặc `fill_qa.py` (⚠️ **dùng script, KHÔNG sửa CSV tay**):
+7. **[BẮT BUỘC] Auto-check furigana** ngay sau khi save HTML — chạy:
+   ```bash
+   python3 .claude/skills/jlpt-reading-long-passage/scripts/check_furigana.py \
+     --file assets/html/doan_van_dai/{LEVEL}_{uuid}.html \
+     --level {LEVEL} \
+     --csv rules/kanji_jlpt_sensei.csv
+   ```
+   - Nếu báo `MISSING FURIGANA` → **BẮT BUỘC** thêm `<ruby><rt>` cho mỗi kanji bị thiếu, KHÔNG sang bước Q+A.
+   - Nếu báo `REDUNDANT FURIGANA` → cân nhắc bỏ ruby thừa (kanji ≤ level không cần furigana).
+   - Nếu báo `UNKNOWN KANJI` → tra cứu kanji hiếm, thường cần ruby ở mọi level.
+   - Chỉ khi script chạy không có `MISSING FURIGANA` → mới sang bước tạo CSV.
+8. **Tạo CSV row** bằng `process_html.py` hoặc `fill_qa.py` (⚠️ **dùng script, KHÔNG sửa CSV tay**):
    ```bash
    # Recommended cho 3-4 câu: JSON
    python3 .claude/skills/jlpt-reading-long-passage/scripts/process_html.py \
@@ -184,9 +196,10 @@ Trước khi sang BƯỚC 2 (QC), agent PHẢI confirm:
 - [ ] `_id` đúng format `{LEVEL}_{uuid32}` (không tạm thời, không placeholder)
 - [ ] Tất cả Q + 4 đáp án + correct_answer + explain_vn + explain_en đã fill (không "TODO", không empty)
 - [ ] Đã đọc lại file HTML vừa gen (mở file, đọc content) — KHÔNG dựa vào "tôi nhớ tôi đã gen"
+- [ ] **Đã chạy `check_furigana.py --file ... --level ... --csv rules/kanji_jlpt_sensei.csv` và KHÔNG có `MISSING FURIGANA`** — auto-check bắt buộc, log output
 
 ❌ Bất kỳ item nào CHƯA confirm → quay lại BƯỚC 1 fix, KHÔNG được QC.
-✅ Khi 5/5 tick → log `GATE 1→2 PASSED — ready to QC` rồi sang BƯỚC 2.
+✅ Khi 6/6 tick → log `GATE 1→2 PASSED — ready to QC` rồi sang BƯỚC 2.
 
 ---
 
@@ -259,7 +272,7 @@ Agent đọc lại file HTML và kiểm tra:
 | 14 | **Nội dung logic + đủ depth cho 3-4 câu hỏi** | Đọc toàn bài | Ý nhất quán, đủ nội dung phủ 3-4 câu hỏi khác nhau, có intro + body + (counter) + conclusion |
 | 15 | **Không mơ hồ (test 2 cách hiểu)** | Đọc từng câu, thử hiểu theo cách 2 | Chỉ có DUY NHẤT 1 cách hiểu hợp lý cho từng câu hỏi |
 | 16 | **Từ vựng đúng level** | Đọc từng từ, đối chiếu R3 | Key terms ≤ level, không dùng ngữ pháp vượt level |
-| 17 | **Furigana đúng từ (tra CSV)** | Tra từng kanji trong `rules/kanji_jlpt_sensei.csv` | Mọi từ có kanji vượt level đều có `<ruby><rt>`. Không thừa furigana cho từ đúng level. Không dạng "Ab" (構ちく) |
+| 17 | **Furigana đúng từ (tra CSV)** | Chạy `python3 .claude/skills/jlpt-reading-long-passage/scripts/check_furigana.py --file <file.html> --level <LEVEL> --csv rules/kanji_jlpt_sensei.csv` | Output KHÔNG có dòng `MISSING FURIGANA`. Mọi kanji vượt level đều có `<ruby><rt>`. Cấm dạng "Ab" (媒たい). |
 
 #### PHẦN C: CÂU HỎI & ĐÁP ÁN (11 checks — áp dụng cho TỪNG câu hỏi)
 
@@ -354,6 +367,12 @@ Sau khi đánh giá 32 mục, agent PHẢI confirm trước khi vào fix loop:
 | #32 (marker dư/thiếu) | Thêm/bớt marker trong HTML hoặc sửa câu hỏi | Chạy `--refresh` → QC lại |
 
 **Lệnh refresh CSV sau khi sửa HTML:**
+
+**Lệnh auto-check furigana sau khi sửa ruby:**
+```bash
+python3 .claude/skills/jlpt-reading-long-passage/scripts/check_furigana.py --file <file.html> --level <LEVEL> --csv rules/kanji_jlpt_sensei.csv
+```
+Output PHẢI không có `MISSING FURIGANA`. Nếu còn → sửa tiếp ruby.
 ```bash
 python3 .claude/skills/jlpt-reading-long-passage/scripts/process_html.py \
   --refresh \
@@ -406,6 +425,11 @@ Sau khi hoàn thành toàn bộ batch, chạy verify toàn bộ:
 # 1. Validate tất cả file HTML (char count + broken ruby)
 python3 .claude/skills/jlpt-reading-long-passage/scripts/process_html.py \
   --validate --html-dir assets/html/doan_van_dai
+
+# 1b. Auto-check furigana coverage cho TẤT CẢ file HTML
+python3 .claude/skills/jlpt-reading-long-passage/scripts/check_furigana.py \
+  --html-dir assets/html/doan_van_dai \
+  --csv rules/kanji_jlpt_sensei.csv
 
 # 2. Đếm số rows trong CSV + check số câu hỏi + last-label rule
 python3 -c "
